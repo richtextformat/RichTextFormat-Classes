@@ -1,0 +1,84 @@
+package uk.co.richtextformat.flex.utils
+{
+	import mx.core.UIComponent;
+	
+	public class DimensionsManager
+	{
+		private static const STYLE_PREFIX:String = "component";
+		private static const DIMENSIONS:Array = ["Width", "Height"];
+		
+		public static function setDimensions (objects:*):void
+		{
+			// arrange passed UIComponent[s] into an array
+			var components:Array;
+			switch (true){
+				
+				case objects is Array:
+					components = objects as Array;
+					break;
+				
+				case objects is UIComponent:
+					components = [objects as UIComponent];
+					break;
+				
+				default:
+					throw new Error("DimensionsManager setDimensions ERROR: 'components' object is neither an Array nor a UIComponent and is therefore useless to the method");
+					return;
+					break;
+			}
+			
+			// create a loop in which we can look for both width and height styles
+			var uiComponent:UIComponent;
+			var dimension:Number;
+			var dimensionName:String;
+			var dimensionSet:Boolean;
+			var maxDimension:int;
+			var amountOfDimensions:int = DIMENSIONS.length;
+			var amountOfComponents:int =  components.length;
+			
+			for (var i:int=0; i<amountOfComponents; i++){
+				uiComponent = components[i] as UIComponent;
+				
+				// prioritise percentage dimensions over pixel dimensions
+				for (var j:int=0; j<amountOfDimensions; j++){
+					dimensionSet = false;
+					dimensionName = DIMENSIONS[j] as String;
+					dimension = uiComponent.getStyle(STYLE_PREFIX + "Percent" + dimensionName);
+					maxDimension = UIComponent["DEFAULT_MAX_" + dimensionName.toUpperCase()];
+					
+					// apply a percentage dimension if we have one
+					if ( !isNaN(dimension) ){
+						if ( dimension>0 && dimension<=100 ){
+							dimensionSet = true;
+							uiComponent[ "percent" + dimensionName ] = dimension;
+						
+							// if we've made it to this point we must have a valid percentage dimension
+							// so we could also check if we've got a minimum dimension to go with that
+							dimension = uiComponent.getStyle(STYLE_PREFIX + "Min" + dimensionName);
+							if ( !isNaN(dimension) ){
+								if ( dimension>0 && dimension<=maxDimension ){
+									uiComponent["min" + dimensionName] = dimension;
+									uiComponent["measuredMin" + dimensionName] = dimension;
+								}
+							}
+						}
+					}
+	
+					// if not try to apply a pixel dimension
+					if (!dimensionSet){
+						dimension = uiComponent.getStyle(STYLE_PREFIX + dimensionName);
+						
+						if ( !isNaN(dimension) ){
+							if ( dimension>0 && dimension<=maxDimension ){
+								uiComponent[dimensionName.toLowerCase()] = dimension;
+								//trace("fr", uiComponent, dimensionName.toLowerCase(), dimension);
+							}
+						}
+					}
+					
+					// if we get nothing but NaNs, no bother, the Flex framework applies defaults to cope with that
+				}
+			}
+		}
+	}
+}

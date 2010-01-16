@@ -1,0 +1,1 @@
+﻿package uk.co.richtextformat.interfaces {	public interface IReset 	{		function reset ():void	}}

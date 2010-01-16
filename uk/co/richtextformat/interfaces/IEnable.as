@@ -1,0 +1,1 @@
+﻿package uk.co.richtextformat.interfaces{		public interface IEnable	{		function disable ():void;		function enable ():void;	};}

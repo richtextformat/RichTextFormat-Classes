@@ -1,0 +1,18 @@
+package uk.co.richtextformat.flex.utils
+{
+	import mx.collections.ListCollectionView;
+	
+	public class FlexStatics
+	{
+		public static function cloneListCollectionView (collection:ListCollectionView, collectionType:Class):ListCollectionView
+		{
+			var newCollection:ListCollectionView = new collectionType();
+			
+			for each (var object:Object in collection){
+				newCollection.addItem(object);
+			}
+			
+			return newCollection;
+		}
+	}
+}

@@ -1,0 +1,13 @@
+package uk.co.richtextformat.flex.utils
+{
+	import flash.events.EventDispatcher;
+	
+	public class DispatchingObject
+	{
+		private var _object:Object;
+		
+		[Bindable]
+		public function get object():Object { return _object; }
+		public function set object(object:Object):void { _object = object; }
+	}
+}

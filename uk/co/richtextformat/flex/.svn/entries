@@ -1,0 +1,37 @@
+8
+
+dir
+57
+http://richtextformat-svn.cvsdude.com/root/richtextformat/src/uk/co/richtextformat/flex
+http://richtextformat-svn.cvsdude.com/root
+
+
+
+2008-10-17T13:49:09.496827Z
+57
+richtextformat
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2a021111-6ad7-4d1a-8095-ae6504b17eeb
+
+containers
+dir
+
+puremvc
+dir
+
+utils
+dir
+
